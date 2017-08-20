@@ -1,0 +1,22 @@
+<%
+Navtastic.define :main_menu do |menu|
+  menu.item "Home", '/'
+  menu.item "Posts", '/posts'
+  menu.item "About", '/about'
+end
+%>
+
+<html>
+  <head>
+    <title>Navtastic Demo Server</title>
+    <style type="text/css">
+      .current { font-weight: bold }
+    </style>
+  </head>
+
+  <body>
+    <%= Navtastic.render :main_menu, current_url %>
+
+    <pre>current_url: <%= current_url %></pre>
+  </body>
+</html>
