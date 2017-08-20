@@ -24,19 +24,29 @@ jobs:
           command: |
             echo "gem 'rspec_junit_formatter'" >> Gemfile
             echo "gem 'rubocop-junit-formatter'" >> Gemfile
+            echo "gem 'simplecov', require: false" >> Gemfile
 
             bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      - run:
+          name: install code climate test reporter
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            chmod +x ./cc-test-reporter
+            sudo mkdir -p $CIRCLE_TEST_REPORTS/phpunit
 
       # run tests!
       - run:
           name: run tests
           command: |
             mkdir /tmp/test-results
-            
-            bundle exec rspec --format progress \
-                              --format RspecJunitFormatter \
-                              --out /tmp/test-results/rspec.xml \
-                              --format progress
+
+            ./cc-test-reporter before-build
+
+            COVERAGE=true bundle exec rspec --format progress \
+                                            --format RspecJunitFormatter \
+                                            --out /tmp/test-results/rspec.xml \
+                                            --format progress
 
             bundle exec rubocop \
               --require $(bundle show rubocop-junit-formatter)/lib/rubocop/formatter/junit_formatter.rb \
@@ -44,6 +54,13 @@ jobs:
               --out /tmp/test-results/rubocop.xml \
               --format progress \
               --parallel
+
+      - run:
+          name: upload reports to code climate
+          when: "always"
+          command: |
+            ./cc-test-reporter format-coverage -t simplecov $CIRCLE_ARTIFACTS/coverage/.resultset.json
+            ./cc-test-reporter upload-coverage
 
       # collect reports
       - store_test_results:
