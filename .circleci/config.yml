@@ -1,0 +1,53 @@
+# Ruby CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-ruby/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+       - image: circleci/ruby:2.4.1
+      
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/postgres:9.4
+
+    working_directory: ~/navtastic
+
+    steps:
+      - checkout
+
+      - run:
+          name: install dependencies
+          command: |
+            echo "gem 'rspec_junit_formatter'" >> Gemfile
+            echo "gem 'rubocop-junit-formatter'" >> Gemfile
+
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      # run tests!
+      - run:
+          name: run tests
+          command: |
+            mkdir /tmp/test-results
+            
+            bundle exec rspec --format progress \
+                              --format RspecJunitFormatter \
+                              --out /tmp/test-results/rspec.xml \
+                              --format progress
+
+            bundle exec rubocop \
+              --require $(bundle show rubocop-junit-formatter)/lib/rubocop/formatter/junit_formatter.rb \
+              --format RuboCop::Formatter::JUnitFormatter \
+              --out /tmp/test-results/rubocop.xml \
+              --format progress \
+              --parallel
+
+      # collect reports
+      - store_test_results:
+          path: /tmp/test-results
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-results

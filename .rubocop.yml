@@ -6,6 +6,7 @@ AllCops:
     - '**/Rakefile'
   Exclude:
     - 'spec/demo/**/*'
+    - 'vendor/**/*'
   TargetRubyVersion: 2.4
 
 Metrics/BlockLength:
