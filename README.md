@@ -16,6 +16,7 @@ of menus.
 - [Installation](#installation)
 - [Example](#example)
 - [Documentation](#documentation)
+  - [Submenus](#submenus)
   - [Current item](#current-item)
   - [Runtime parameters](#runtime-parameters)
 
@@ -68,6 +69,39 @@ Using the default renderer, assuming that the current url starts with `/posts`, 
 ```
 
 ## Documentation
+
+## Submenus
+
+Every item can have a submenu. They can be nested as deeply as you want (or at least until Ruby starts complaining).
+
+```ruby
+Navtastic.define :main_menu do |menu|
+  menu.item "Home", '/' do |submenu|
+    submenu.item "Posts", '/posts'
+    submenu.item "About", '/about'
+  end
+
+  menu.item "Settings" do |submenu|
+    submenu.item "General", '/settings'
+    submenu.item "Profile", '/settings/profile'
+  end
+end
+```
+
+By default, submenus will be rendered inside the `<li>` tag of the parent item.
+
+```html
+<ul>
+  <li>
+    <a href="/">Parent</a>
+    <ul>
+      <li>
+        <a href="/child">Child</a>
+      </li>
+    </ul>
+  </li>
+</ul>
+```
 
 ### Current item
 
