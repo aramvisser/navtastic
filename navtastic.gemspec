@@ -13,12 +13,13 @@ Gem::Specification.new do |s|
   s.files         = `git ls-files -z`.split("\x0")
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ['lib']
+  s.extra_rdoc_files = ['README.md']
 
-  s.add_dependency 'arbre'
+  s.add_dependency 'arbre', '~> 1.1'
 
-  s.add_development_dependency 'redcarpet'
-  s.add_development_dependency 'rspec'
-  s.add_development_dependency 'rubocop'
-  s.add_development_dependency 'rubocop-rspec'
-  s.add_development_dependency 'yard'
+  s.add_development_dependency 'redcarpet', '~> 3.4'
+  s.add_development_dependency 'rspec', '~> 3.6'
+  s.add_development_dependency 'rubocop', '~> 0.48'
+  s.add_development_dependency 'rubocop-rspec', '~> 1.15'
+  s.add_development_dependency 'yard', '~> 0.9'
 end
