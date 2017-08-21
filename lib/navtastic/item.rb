@@ -7,6 +7,9 @@ module Navtastic
     # @return [String,nil] the url to link to if item is a link, nil otherwise
     attr_reader :url
 
+    # @return [Menu,nil] the submenu of this item, if defined
+    attr_accessor :submenu
+
     # Create a new item
     #
     # This should not be used directly. Use the {Menu#item} method instead.
@@ -20,6 +23,8 @@ module Navtastic
       @menu = menu
       @name = name
       @url = url
+
+      @submenu = nil
     end
 
     # Check if this item is the current item in the menu
@@ -30,6 +35,11 @@ module Navtastic
     # @return [Bool] if the item is the current item
     def current?
       @menu.current_item == self
+    end
+
+    # @return [Bool] true if the item has a submenu, false other
+    def submenu?
+      !@submenu.nil?
     end
 
     def inspect

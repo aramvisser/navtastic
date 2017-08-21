@@ -6,31 +6,57 @@ module Navtastic
     # @return [Array<Item>] the items in this menu
     attr_reader :items
 
-    # @see file:README.md#Current_item documentation on how the current item is
-    #   selected
-    #
-    # @return [Item,nil] the current active item
-    attr_reader :current_item
+    # @return [Menu,nil] this parent of this menu
+    attr_reader :parent
 
     # Create a new empty menu
-    def initialize
+    #
+    # @param root [Menu] the root menu of this is a submenu
+    def initialize(parent = nil)
+      @parent = parent
+
+      @current_item = nil
       @items = []
       @items_by_url = {}
-      @current_item = nil
+    end
+
+    # @return [true] if this menu is the root menu
+    # @return [false] if this menu is a submenu
+    def root?
+      @parent.nil?
+    end
+
+    # The depth of this menu
+    #
+    # The root menu always has depth 0.
+    #
+    # @return [Integer] the depth of this menu
+    def depth
+      if @parent
+        @parent.depth + 1
+      else
+        0
+      end
     end
 
     # Add a new item at the end of the menu
     #
     # @param name [String]the name to display in the menu
     # @param url [String] the url to link to, if the item is a link
+    #
+    # @yield [submenu] block to generate a sub menu
+    # @yieldparam submenu [Menu] the menu to be initialized
     def item(name, url = nil)
       item = Item.new(self, name, url)
 
-      @items << item
-      @items_by_url[item.url] = item if item.url
+      if block_given?
+        submenu = Menu.new(self)
+        yield submenu
+        item.submenu = submenu
+      end
 
-      # The first item with a url is the default current item
-      @current_item = item if @current_item.nil? && item.url
+      @items << item
+      register_item(item)
 
       item
     end
@@ -66,6 +92,36 @@ module Navtastic
                       .find { |url, _item| current_url.start_with? url }
 
       @current_item = matching_item[1] if matching_item
+    end
+
+    # @see file:README.md#Current_item documentation on how the current item is
+    #   selected
+    #
+    # @return [Item,nil] the current active item
+    def current_item
+      if root?
+        @current_item
+      else
+        @parent.current_item
+      end
+    end
+
+    protected
+
+    # Register a newly added item
+    #
+    # @param item [Item] the new item to register
+    def register_item(item)
+      return unless item.url
+
+      @items_by_url[item.url] = item
+
+      if root?
+        # The first item with a url is the default current item
+        @current_item = item if @current_item.nil? && item.url
+      else
+        @parent.register_item(item)
+      end
     end
   end
 end

@@ -1,8 +1,14 @@
 <%
 Navtastic.define :main_menu do |menu|
-  menu.item "Home", '/'
-  menu.item "Posts", '/posts'
-  menu.item "About", '/about'
+  menu.item "Home", '/' do |submenu|
+    submenu.item "Posts", '/posts'
+    submenu.item "About", '/about'
+  end
+
+  menu.item "Settings" do |submenu|
+    submenu.item "General", '/settings'
+    submenu.item "Profile", '/settings/profile'
+  end
 end
 %>
 
@@ -11,6 +17,7 @@ end
     <title>Navtastic Demo Server</title>
     <style type="text/css">
       .current { font-weight: bold }
+      .current ul { font-weight: normal }
     </style>
   </head>
 
