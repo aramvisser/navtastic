@@ -48,7 +48,7 @@ module Navtastic
 
     menu = Menu.new
     block.call(menu, params)
-    menu.current_url!(current_url)
+    menu.current_url = current_url
     Renderer.render(menu)
   end
 

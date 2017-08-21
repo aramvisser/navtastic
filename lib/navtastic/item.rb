@@ -24,6 +24,9 @@ module Navtastic
 
     # Check if this item is the current item in the menu
     #
+    # @see file:README.md#Current_item documentation on how the current item is
+    #   selected
+    #
     # @return [Bool] if the item is the current item
     def current?
       @menu.current_item == self

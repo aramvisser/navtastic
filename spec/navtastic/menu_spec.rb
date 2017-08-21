@@ -6,7 +6,7 @@ RSpec.describe Navtastic::Menu do
     menu = described_class.new
     menu.item "Home"
     menu.item "Posts", '/posts'
-    menu.item "About", '/about'
+    menu.item "Featured", '/posts/featured'
     menu
   end
 
@@ -65,21 +65,11 @@ RSpec.describe Navtastic::Menu do
 
   describe '#[]' do
     it "returns the item for the given url" do
-      expect(menu['/about'].name).to eql 'About'
+      expect(menu['/posts/featured'].name).to eql 'Featured'
     end
 
     it "returns nil when the url doesn't exist" do
       expect(menu['/foo']).to be nil
-    end
-  end
-
-  describe '#current_url!' do
-    let(:current_url) { '/posts' }
-
-    before { menu.current_url! current_url }
-
-    it "sets the item matching the url as current" do
-      expect(menu).to have_current_item(menu[current_url])
     end
   end
 
@@ -99,12 +89,54 @@ RSpec.describe Navtastic::Menu do
     end
 
     context "when the current url was set" do
-      before { menu.current_url!(url) }
+      before { menu.current_url = url }
 
-      let(:url) { '/about' }
+      let(:url) { '/posts' }
 
       it "points to the item matching the url" do
         expect(current_item).to eq menu[url]
+      end
+    end
+  end
+
+  describe '#current_url=' do
+    before { menu.current_url = current_url }
+
+    context "when the url matches an item directly" do
+      let(:current_url) { '/posts' }
+
+      it "sets the item matching the url as current" do
+        expect(menu).to have_current_item(menu[current_url])
+      end
+    end
+
+    context "when the url matches the beginning of an item" do
+      let(:current_url) { '/posts/featured/2' }
+
+      it "sets the item with the longest matching url as current" do
+        expect(menu).to have_current_item(menu['/posts/featured'])
+      end
+    end
+
+    context "when the url matches nothing without a root item" do
+      let(:current_url) { '/foo/bar' }
+
+      it { is_expected.not_to have_current_item }
+    end
+
+    context "when the url matches nothing with a root item" do
+      subject(:menu) do
+        menu = described_class.new
+        menu.item "Home", '/'
+        menu.item "Posts", '/posts'
+        menu.item "Featured", '/posts/featured'
+        menu
+      end
+
+      let(:current_url) { '/foo/bar' }
+
+      it "sets the root item as current" do
+        expect(menu).to have_current_item(menu['/'])
       end
     end
   end

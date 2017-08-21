@@ -6,6 +6,9 @@ module Navtastic
     # @return [Array<Item>] the items in this menu
     attr_reader :items
 
+    # @see file:README.md#Current_item documentation on how the current item is
+    #   selected
+    #
     # @return [Item,nil] the current active item
     attr_reader :current_item
 
@@ -52,9 +55,17 @@ module Navtastic
     #
     # @private
     #
-    # @param url [String] the url of the current page
-    def current_url!(url)
-      @current_item = self[url]
+    # @param current_url [String] the url of the current page
+    def current_url=(current_url)
+      @current_item = nil
+      return if current_url.nil?
+
+      # Sort urls from longest to shortest and find the first matching substring
+      matching_item = @items_by_url
+                      .sort_by { |url, _item| -url.length }.to_h
+                      .find { |url, _item| current_url.start_with? url }
+
+      @current_item = matching_item[1] if matching_item
     end
   end
 end

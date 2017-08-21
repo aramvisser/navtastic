@@ -3,7 +3,7 @@ require 'spec_helper'
 RSpec.describe Navtastic::Item do
   describe '#current?' do
     let(:menu) { Navtastic::Menu.new }
-    let(:item) { menu.item "Home", '/' }
+    let!(:item) { menu.item "Home", '/' }
 
     it "calls the Menu#current_item method" do
       allow(menu).to receive :current_item

@@ -15,7 +15,9 @@ of menus.
 
 - [Installation](#installation)
 - [Example](#example)
-- [Usage](#usage)
+- [Documentation](#documentation)
+  - [Current item](#current-item)
+  - [Runtime parameters](#runtime-parameters)
 
 ## Installation
 
@@ -49,7 +51,7 @@ Render it in your partials:
 <%= Navtastic.render :main_menu, current_url %>
 ```
 
-Using the default renderer, assuming that `/posts` is the current url, will result in:
+Using the default renderer, assuming that the current url starts with `/posts`, will result in:
 
 ```html
 <ul>
@@ -65,7 +67,26 @@ Using the default renderer, assuming that `/posts` is the current url, will resu
 </ul>
 ```
 
-## Usage
+## Documentation
+
+### Current item
+
+The current active item is decided by the `current_url` parameter when rendering a menu. It is the
+item with the longest url that starts with the current_url.
+
+For example, if there is a menu containing these urls:
+
+- `/`
+- `/posts`
+- `/posts/featured`
+
+If the current_url is `/posts/featured/2017`, the `/posts/featured` item will be highlighted. If the
+current_url is `/posts/123`, then `/posts` is highlighted.
+
+The root url `/` will always match, if no other items match the current _url. If there is no item
+with `/` as url in the menu and no other urls match, nothing will be highlighted.
+
+### Runtime parameters
 
 You can pass runtime parameters when defining a menu. For example, passing the current user and
 change the menu accordingly.

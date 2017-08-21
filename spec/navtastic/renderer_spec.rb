@@ -8,8 +8,7 @@ RSpec.describe Navtastic::Renderer do
     let(:menu) do
       menu = Navtastic::Menu.new
       menu.item "Home", '/'
-
-      menu.current_url! current_url
+      menu.current_url = current_url
       menu
     end
 
