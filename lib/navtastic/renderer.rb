@@ -15,15 +15,15 @@ module Navtastic
     # @return [Renderer]
     def self.render(menu)
       new(menu: menu) do
-        root(menu)
+        menu(menu)
       end
     end
 
-    # The render starting point (e.g. root `<ul>` tag)
+    # Starting a new root menu or submenu (e.g. `<ul>` tag)
     #
     # @param menu [Menu]
     # @return [Arbre::HTML::Tag]
-    def root(menu)
+    def menu(menu)
       ul do
         menu.each do |item|
           item_container item
@@ -38,6 +38,8 @@ module Navtastic
     def item_container(item)
       li(class: css_classes_string(item, :item_container)) do
         item_content item
+
+        menu(item.submenu) if item.submenu?
       end
     end
 
@@ -49,7 +51,7 @@ module Navtastic
       if item.url
         a(href: item.url) { item.name }
       else
-        item.name
+        span item.name
       end
     end
 
