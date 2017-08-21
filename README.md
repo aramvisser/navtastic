@@ -9,7 +9,7 @@ Navtastic is way to create and render complex navigation menus. It allows for ru
 of menus.
 
 - Keep menu content and rendering logic separate
-- Automatically highlight the item for the current page
+- Automatically highlight the current page
 
 ## Table of Contents
 

@@ -32,10 +32,6 @@ module Navtastic
       item
     end
 
-    # Loop over every item in this menu
-    #
-    # @yield [item]
-    # @yieldparam item [Item]
     def each
       @items.each do |item|
         yield item

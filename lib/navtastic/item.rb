@@ -4,7 +4,7 @@ module Navtastic
     # @return [String] the name to be displayed in the menu
     attr_reader :name
 
-    # @return [String,nil] the url to link to, if item is a link
+    # @return [String,nil] the url to link to if item is a link, nil otherwise
     attr_reader :url
 
     # Create a new item
@@ -29,9 +29,6 @@ module Navtastic
       @menu.current_item == self
     end
 
-    # Quick overview of the item
-    #
-    # @private
     def inspect
       "#<Item \"#{name}\" [#{url}] current?:#{current?}>"
     end
