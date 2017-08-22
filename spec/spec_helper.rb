@@ -25,7 +25,8 @@ Bundler.setup
 require 'navtastic'
 require 'pp'
 
-require 'support/navtastic_store'
+require 'support/navtastic_helpers'
+require 'support/navtastic_reset'
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

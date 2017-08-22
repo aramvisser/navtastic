@@ -6,13 +6,13 @@ AllCops:
     - '**/Rakefile'
   Exclude:
     - 'spec/demo/**/*'
+    - 'spec/support/**/*'
     - 'vendor/**/*'
   TargetRubyVersion: 2.4
 
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*_spec.rb'
-    - 'spec/support/matchers/**/*'
 
 Style/FrozenStringLiteralComment:
   Enabled: false

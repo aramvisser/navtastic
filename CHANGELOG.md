@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Configuration options
+
 ## 0.0.1 - 2017-08-21
 
 ### Added
