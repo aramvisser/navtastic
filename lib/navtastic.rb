@@ -1,3 +1,4 @@
+require 'navtastic/configuration'
 require 'navtastic/item'
 require 'navtastic/menu'
 require 'navtastic/renderer'
@@ -49,7 +50,7 @@ module Navtastic
     menu = Menu.new
     block.call(menu, params)
     menu.current_url = current_url
-    Renderer.render(menu)
+    Navtastic.configuration.renderer.render(menu)
   end
 
   # A list of all defined menus

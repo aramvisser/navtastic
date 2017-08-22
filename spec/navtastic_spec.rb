@@ -37,16 +37,28 @@ RSpec.describe Navtastic do
   describe '.render' do
     before { define_menu }
 
-    subject(:renderer) { described_class.render(menu_name, '/') }
+    subject(:render) { described_class.render(menu_name, '/') }
 
     context "when the menu was found" do
-      specify { expect(renderer).to be_a Navtastic::Renderer }
+      specify { expect(render).to be_a described_class.configuration.renderer }
     end
 
     context "when the menu was not found" do
-      subject(:renderer) { described_class.render("foo", '/') }
+      subject(:render) { described_class.render("foo", '/') }
 
-      specify { expect { renderer }.to raise_error KeyError }
+      specify { expect { render }.to raise_error KeyError }
+    end
+
+    context "when the renderer was updated in the configuration" do
+      let(:mock_renderer) { class_double(Navtastic::Renderer) }
+
+      before { set_configuration renderer: mock_renderer }
+
+      it "calls `.render` on the class in the configuration" do
+        allow(mock_renderer).to receive :render
+        render
+        expect(mock_renderer).to have_received(:render).with(Navtastic::Menu)
+      end
     end
   end
 end
