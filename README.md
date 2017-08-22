@@ -20,6 +20,7 @@ configurations of menus, depending on context.
   - [Submenus](#submenus)
   - [Current item](#current-item)
   - [Runtime parameters](#runtime-parameters)
+  - [Configuration](#configuration)
 
 ## Installation
 
@@ -142,3 +143,20 @@ end
 # Render it with the current user as a parameter
 Navtastic.render :main_menu, current_url, current_user: User.current
 ```
+
+### Configuration
+
+Some global settings that Navtastic uses can be configured. Make sure the configuration happens
+before defining any menu (e.g. when using rails, add it to `config/initializers/navtastic.rb`).
+
+```ruby
+Navtastic.configure do |config|
+  config.option = value
+end
+```
+
+The following options are available:
+
+- **renderer** (default: `Navtastic::Renderer`)
+
+  Which renderer to use when displaying a menu.
