@@ -6,8 +6,8 @@
 [![Gem](https://img.shields.io/gem/v/navtastic.svg)](https://rubygems.org/gems/navtastic)
 [![MIT License](https://img.shields.io/github/license/aramvisser/navtastic.svg)](https://github.com/aramvisser/navtastic/blob/master/LICENSE)
 
-Navtastic is way to create and render complex navigation menus. It allows for runtime configurations
-of menus.
+Navtastic is way to create and display complex navigation menus for websites. It allows for runtime
+configurations of menus, depending on context.
 
 - Keep menu content and rendering logic separate
 - Automatically highlight the current page
@@ -37,7 +37,7 @@ bundle install
 
 ## Example
 
-Define a menu somwhere:
+Define a menu somewhere:
 
 ```ruby
 Navtastic.define :main_menu do |menu|
@@ -73,7 +73,7 @@ Using the default renderer, assuming that the current url starts with `/posts`, 
 
 ## Submenus
 
-Every item can have a submenu. They can be nested as deeply as you want (or at least until Ruby starts complaining).
+Every item can have a submenu. They can be nested as deeply as you want.
 
 ```ruby
 Navtastic.define :main_menu do |menu|
@@ -118,7 +118,7 @@ For example, if there is a menu containing these urls:
 If the current_url is `/posts/featured/2017`, the `/posts/featured` item will be highlighted. If the
 current_url is `/posts/123`, then `/posts` is highlighted.
 
-The root url `/` will always match, if no other items match the current _url. If there is no item
+The root url `/` will always match, if no other items match the current url. If there is no item
 with `/` as url in the menu and no other urls match, nothing will be highlighted.
 
 ### Runtime parameters
