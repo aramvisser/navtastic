@@ -157,6 +157,6 @@ end
 
 The following options are available:
 
-- **renderer** (default: `Navtastic::Renderer`)
+- **renderer** (default: `Navtastic::Renderer::Simple`)
 
   Which renderer to use when displaying a menu.

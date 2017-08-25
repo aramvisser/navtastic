@@ -50,7 +50,7 @@ RSpec.describe Navtastic do
     end
 
     context "when the renderer was updated in the configuration" do
-      let(:mock_renderer) { class_double(Navtastic::Renderer) }
+      let(:mock_renderer) { class_double(Navtastic::Renderer::Simple) }
 
       before { set_configuration renderer: mock_renderer }
 

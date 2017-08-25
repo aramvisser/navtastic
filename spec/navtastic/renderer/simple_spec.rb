@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Navtastic::Renderer do
+RSpec.describe Navtastic::Renderer::Simple do
   describe '.render' do
     subject(:renderer) { described_class.render menu }
 
@@ -12,7 +12,7 @@ RSpec.describe Navtastic::Renderer do
       menu
     end
 
-    it "returns an instance of Navtastic::Renderer" do
+    it "returns an instance of Navtastic::Renderer::Simple" do
       expect(renderer).to be_a described_class
     end
   end

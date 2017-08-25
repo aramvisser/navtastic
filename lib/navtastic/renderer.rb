@@ -1,7 +1,9 @@
 require 'arbre'
 
 module Navtastic
-  # Generate HTML based on a menu
+  # Generate HTML based on a menu.
+  #
+  # This base renderer only generates a structure and no css classes.
   #
   # The actual HTML generation is done using the
   # [Arbre](https://github.com/activeadmin/arbre) gem.
@@ -12,7 +14,7 @@ module Navtastic
     #
     # @param menu [Menu]
     #
-    # @return [Renderer]
+    # @return [Self]
     def self.render(menu)
       new(menu: menu) do
         menu(menu)
@@ -43,7 +45,7 @@ module Navtastic
       end
     end
 
-    # The item itself (e.g. `<a>` tag for links)
+    # The item itself (e.g. `<a>` tag for links or `<span>` for text)
     #
     # @param item [Item]
     # @return [Arbre::HTML::Tag]
@@ -55,24 +57,19 @@ module Navtastic
       end
     end
 
-    # Decide which css classes are needed for this item
+    # Decide which css classes are needed for an item
     #
-    # For example, the {#item_container} uses this to retrieve the css class for
+    # For example, {#item_container} uses this to retrieve the css class for
     # the current active item.
+    #
+    # This method is ideal for overriding in a subclass.
     #
     # @param item [Item] the current item that is rendered
     # @param context [Symbol] which method is asking for the css classes
     #
     # @return [Array<String>] list of css classes to apply to the HTML element
-    def css_classes(item, context)
-      classes = []
-
-      case context
-      when :item_container
-        classes << 'current' if item.current?
-      end
-
-      classes
+    def css_classes(item, context) # rubocop:disable Lint/UnusedMethodArgument
+      []
     end
 
     # Same as {css_classes} method, but joins classes together in a string

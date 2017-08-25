@@ -14,7 +14,7 @@ class DemoServer
       # A poor man's hot reload. Just reload everything on every request.
       Object.send(:remove_const, :Navtastic) if Object.constants.include?(:Navtastic)
 
-      Dir.glob('lib/**/*.rb').each do |file|
+      Dir.glob('lib/**/*.rb').sort_by(&:length).each do |file|
         load file
       end
     end
@@ -23,12 +23,11 @@ class DemoServer
     WEBrick::HTTPUtils::DefaultMimeTypes.store('rhtml', 'text/html')
 
     # Mount servlets
-    #s.mount('/', HTTPServlet::FileHandler, Dir.pwd)
     s.mount '/', MenuServlet
 
     # Trap signals so as to shutdown cleanly.
     ['TERM', 'INT'].each do |signal|
-      trap(signal){ s.shutdown }
+      trap(signal) { s.shutdown }
     end
 
     # Start the server and block on input.
