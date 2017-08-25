@@ -1,0 +1,63 @@
+<%
+Navtastic.configure do |config|
+  config.renderer = Navtastic::Renderer::Bulma
+end
+
+Navtastic.define :main_menu do |menu|
+  menu.item "General" do |generalmenu|
+    generalmenu.item "Dashboard", '/bulma'
+    generalmenu.item "Customers", '/bulma/customers'
+  end
+
+  menu.item "Administration" do |adminmenu|
+    adminmenu.item "Team Settings", '/bulma/team'
+    adminmenu.item "Manage Your Team", '/bulma/manage' do |teammenu|
+      teammenu.item "Members", '/bulma/manage/'
+      teammenu.item "Plugins", '/bulma/manage/plugins'
+      teammenu.item "Add a member", '/bulma/manage/members'
+    end
+    adminmenu.item "Invitations", '/bulma/invitations'
+    adminmenu.item "Cloud Storage Environment Settings", '/bulma/cloud'
+    adminmenu.item "Authentication", '/bulma/authentication'
+  end
+
+  menu.item "Transactions" do |transactionmenu|
+    transactionmenu.item "Payments", '/bulma/transactions'
+    transactionmenu.item "Transfers", '/bulma/transactions/transfers'
+    transactionmenu.item "Balance", '/bulma/transactions/balance'
+  end
+
+  menu.item "Other renderers" do |rendermenu|
+    rendermenu.item "Overview", '/'
+    rendermenu.item "Simple", '/simple'
+  end
+end
+%>
+
+<html>
+  <head>
+    <title>Navtastic Bulma Renderer</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.css">
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="columns">
+        <div class="column">
+          <h1 class="title">Without root labels</h1>
+          <div style="max-width: 300px">
+            <%= Navtastic.render :main_menu, current_url %>
+          </div>
+        </div>
+
+        <div class="column">
+          <h1 class="title">With root labels</h1>
+          <div style="max-width: 300px">
+            <%= Navtastic.render :main_menu, current_url, renderer: { root_labels: true } %>
+          </div>
+      </div>
+    </div>
+
+    <pre>current_url: <%= current_url %></pre>
+  </body>
+</html>
