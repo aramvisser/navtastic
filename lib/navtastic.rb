@@ -35,9 +35,16 @@ module Navtastic
 
   # Render a stored menu
   #
+  # The `params` parameter is passed along to the block in {Navtastic.define}.
+  #
+  # If `params` contains a `:renderer` key, it's removed from the hash and
+  # passed to the renderer instead. Look at the renderer documentation to see
+  # which options are supported.
+  #
   # @param name the name of the defined menu
   # @param current_url [String] the url of the current page
   # @param params [Hash] runtime parameters
+  # @option params [Hash] :renderer Options passed to the renderer
   #
   # @raise [KeyError] if the menu was not defined
   #
@@ -48,10 +55,13 @@ module Navtastic
 
     raise KeyError, "menu not defined: #{name.inspect}" if block.nil?
 
+    # Remove renderer options from parameters
+    renderer_options = params.delete(:renderer) || {}
+
     menu = Menu.new
     block.call(menu, params)
     menu.current_url = current_url
-    Navtastic.configuration.renderer.render(menu)
+    Navtastic.configuration.renderer.render(menu, renderer_options)
   end
 
   # A list of all defined menus

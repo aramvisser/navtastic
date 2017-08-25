@@ -3,7 +3,7 @@ module Navtastic # :nodoc:
   class Configuration
     # The default renderer to use when displaying a menu
     #
-    # Defaults to {Navtastic::Renderer::Simple}
+    # Defaults to {Navtastic::Renderer::Simple}.
     #
     # @return any class that responds to the `.render` method
     attr_accessor :renderer

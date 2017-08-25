@@ -13,19 +13,20 @@ module Navtastic
     # Create a new renderer
     #
     # @param menu [Menu]
+    # @param options [Hash]
     #
     # @return [Self]
-    def self.render(menu)
-      new(menu: menu) do
-        render_menu(menu)
+    def self.render(menu, options = {})
+      new(root: menu, options: options) do
+        render_menu(root)
       end
     end
 
-    # Starting a new root menu or submenu (e.g. `<ul>` tag)
+    # Start a new root menu or submenu (e.g. `<ul>` tag)
     #
     # @param menu [Menu]
     # @return [Arbre::HTML::Tag]
-    def menu_tag(menu)
+    def menu_tag(menu) # rubocop:disable Lint/UnusedMethodArgument
       ul { yield }
     end
 
@@ -33,7 +34,7 @@ module Navtastic
     #
     # @param item [Item]
     # @return [Arbre::HTML::Tag]
-    def item_tag(item)
+    def item_tag(item) # rubocop:disable Lint/UnusedMethodArgument
       li { yield }
     end
 
@@ -49,21 +50,46 @@ module Navtastic
       end
     end
 
+    # Check if a submenu should be displayed inside the item container of after
+    # it.
+    #
+    # Defaults to `true`.
+    #
+    # @param item [Item]
+    # @return [bool]
+    def menu_inside_container?(item) # rubocop:disable Lint/UnusedMethodArgument
+      true
+    end
+
     private
-    
-    # The complete structure of the menu.
+
+    # Render the menu structure
     #
     # @param menu [Menu]
     # @return [Arbre::HTML::Tag]
     def render_menu(menu)
       menu_tag(menu) do
         menu.each do |item|
-          item_tag(item) do
-            item_content(item)
-            render_menu(item.submenu) if item.submenu?
-          end
+          render_item(item)
         end
       end
+    end
+
+    # Render the item structure
+    #
+    # @param item [Item]
+    # @return [Arbre::HTML::Tag]
+    def render_item(item)
+      item_tag(item) do
+        item_content(item)
+
+        if item.submenu? && menu_inside_container?(item)
+          render_menu(item.submenu)
+        end
+      end
+
+      return unless item.submenu? && !menu_inside_container?(item)
+      render_menu(item.submenu)
     end
   end
 end

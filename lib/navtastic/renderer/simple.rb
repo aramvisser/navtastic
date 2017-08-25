@@ -11,7 +11,7 @@ module Navtastic
       private
 
       def current_css_class(item)
-        if item.current? then 'current' else nil end
+        item.current? ? 'current' : nil
       end
     end
   end
