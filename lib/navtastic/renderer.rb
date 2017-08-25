@@ -17,7 +17,7 @@ module Navtastic
     # @return [Self]
     def self.render(menu)
       new(menu: menu) do
-        menu(menu)
+        render_menu(menu)
       end
     end
 
@@ -25,24 +25,16 @@ module Navtastic
     #
     # @param menu [Menu]
     # @return [Arbre::HTML::Tag]
-    def menu(menu)
-      ul do
-        menu.each do |item|
-          item_container item
-        end
-      end
+    def menu_tag(menu)
+      ul { yield }
     end
 
     # The container for every menu item (e.g. `<li>` tags)
     #
     # @param item [Item]
     # @return [Arbre::HTML::Tag]
-    def item_container(item)
-      li(class: css_classes_string(item, :item_container)) do
-        item_content item
-
-        menu(item.submenu) if item.submenu?
-      end
+    def item_tag(item)
+      li { yield }
     end
 
     # The item itself (e.g. `<a>` tag for links or `<span>` for text)
@@ -53,32 +45,25 @@ module Navtastic
       if item.url
         a(href: item.url) { item.name }
       else
-        span item.name
+        span { item.name }
       end
     end
 
-    # Decide which css classes are needed for an item
+    private
+    
+    # The complete structure of the menu.
     #
-    # For example, {#item_container} uses this to retrieve the css class for
-    # the current active item.
-    #
-    # This method is ideal for overriding in a subclass.
-    #
-    # @param item [Item] the current item that is rendered
-    # @param context [Symbol] which method is asking for the css classes
-    #
-    # @return [Array<String>] list of css classes to apply to the HTML element
-    def css_classes(item, context) # rubocop:disable Lint/UnusedMethodArgument
-      []
-    end
-
-    # Same as {css_classes} method, but joins classes together in a string
-    #
-    # @see css_classes
-    #
-    # @return [String]
-    def css_classes_string(item, context)
-      css_classes(item, context).join ' '
+    # @param menu [Menu]
+    # @return [Arbre::HTML::Tag]
+    def render_menu(menu)
+      menu_tag(menu) do
+        menu.each do |item|
+          item_tag(item) do
+            item_content(item)
+            render_menu(item.submenu) if item.submenu?
+          end
+        end
+      end
     end
   end
 end

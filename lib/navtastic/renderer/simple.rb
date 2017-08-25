@@ -2,17 +2,16 @@ require 'arbre'
 
 module Navtastic
   class Renderer
-    # This renderer adds a few css classes to the base renderer
+    # This renderer only adds a `current` css class to the current item
     class Simple < Navtastic::Renderer
-      def css_classes(item, context)
-        classes = super(item, context)
+      def item_tag(item)
+        li(class: current_css_class(item)) { yield }
+      end
 
-        case context
-        when :item_container
-          classes << 'current' if item.current?
-        end
+      private
 
-        classes
+      def current_css_class(item)
+        if item.current? then 'current' else nil end
       end
     end
   end
