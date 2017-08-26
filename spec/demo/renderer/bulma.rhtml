@@ -21,12 +21,6 @@ Navtastic.define :main_menu do |menu|
     adminmenu.item "Authentication", '/bulma/authentication'
   end
 
-  menu.item "Transactions" do |transactionmenu|
-    transactionmenu.item "Payments", '/bulma/transactions'
-    transactionmenu.item "Transfers", '/bulma/transactions/transfers'
-    transactionmenu.item "Balance", '/bulma/transactions/balance'
-  end
-
   menu.item "Other renderers" do |rendermenu|
     rendermenu.item "Overview", '/'
     rendermenu.item "Simple", '/simple'
@@ -42,18 +36,27 @@ end
 
   <body>
     <div class="container">
+      <div class="content">
+        Menu example is taken directly from <a href="http://bulma.io/documentation/components/menu/">the Bulma documentation</a>.
+      </div>
       <div class="columns">
         <div class="column">
-          <h1 class="title">Without root labels</h1>
+          <div class="content">
+            <h1 class="title">Without headers option</h1>
+            <code>Navtastic.render :main_menu, current_url</code>
+          </div>
           <div style="max-width: 300px">
             <%= Navtastic.render :main_menu, current_url %>
           </div>
         </div>
 
         <div class="column">
-          <h1 class="title">With root labels</h1>
+          <div class="content">
+            <h1 class="title">With headers option</h1>
+            <code>Navtastic.render :main_menu, current_url, renderer: { headers: true }</code>
+          </div>
           <div style="max-width: 300px">
-            <%= Navtastic.render :main_menu, current_url, renderer: { root_labels: true } %>
+            <%= Navtastic.render :main_menu, current_url, renderer: { headers: true } %>
           </div>
       </div>
     </div>
