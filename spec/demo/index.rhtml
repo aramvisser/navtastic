@@ -1,29 +1,14 @@
-<%
-Navtastic.define :main_menu do |menu|
-  menu.item "Home", '/' do |submenu|
-    submenu.item "Posts", '/posts'
-    submenu.item "About", '/about'
-  end
-
-  menu.item "Settings" do |submenu|
-    submenu.item "General", '/settings'
-    submenu.item "Profile", '/settings/profile'
-  end
-end
-%>
-
 <html>
   <head>
     <title>Navtastic Demo Server</title>
-    <style type="text/css">
-      .current { font-weight: bold }
-      .current ul { font-weight: normal }
-    </style>
   </head>
 
   <body>
-    <%= Navtastic.render :main_menu, current_url %>
+    <h1>Renderers:</h1>
 
-    <pre>current_url: <%= current_url %></pre>
+    <ul>
+      <li><a href="simple">Simple</a></li>
+      <li><a href="bulma">Bulma</a></li>
+    </ul>
   </body>
 </html>

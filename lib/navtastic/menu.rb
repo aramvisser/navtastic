@@ -11,7 +11,7 @@ module Navtastic
 
     # Create a new empty menu
     #
-    # @param root [Menu] the root menu of this is a submenu
+    # @param parent [Menu] the parent menu of this is submenu
     def initialize(parent = nil)
       @parent = parent
 

@@ -1,0 +1,37 @@
+<%
+Navtastic.configure do |config|
+  config.renderer = Navtastic::Renderer::Simple
+end
+
+Navtastic.define :main_menu do |menu|
+  menu.item "Home", '/simple' do |submenu|
+    submenu.item "Posts", '/simple/posts'
+    submenu.item "About", '/simple/about'
+  end
+
+  menu.item "Settings" do |submenu|
+    submenu.item "General", '/simple/settings'
+    submenu.item "Profile", '/simple/settings/profile'
+  end
+
+  menu.item "Other Renderers", '/' do |submenu|
+    submenu.item "Bulma", '/bulma'
+  end
+end
+%>
+
+<html>
+  <head>
+    <title>Navtastic Simple Renderer</title>
+    <style type="text/css">
+      .current { font-weight: bold }
+      .current ul { font-weight: normal }
+    </style>
+  </head>
+
+  <body>
+    <%= Navtastic.render :main_menu, current_url %>
+
+    <pre>current_url: <%= current_url %></pre>
+  </body>
+</html>

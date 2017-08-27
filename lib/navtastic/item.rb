@@ -1,6 +1,9 @@
 module Navtastic
   # A single menu item
   class Item
+    # @return [Menu] the containing menu
+    attr_reader :menu
+
     # @return [String] the name to be displayed in the menu
     attr_reader :name
 

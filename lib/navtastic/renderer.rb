@@ -1,7 +1,9 @@
 require 'arbre'
 
 module Navtastic
-  # Generate HTML based on a menu
+  # Generate HTML based on a menu.
+  #
+  # This base renderer only generates a structure and no css classes.
   #
   # The actual HTML generation is done using the
   # [Arbre](https://github.com/activeadmin/arbre) gem.
@@ -11,39 +13,32 @@ module Navtastic
     # Create a new renderer
     #
     # @param menu [Menu]
+    # @param options [Hash]
     #
-    # @return [Renderer]
-    def self.render(menu)
-      new(menu: menu) do
-        menu(menu)
+    # @return [Self]
+    def self.render(menu, options = {})
+      new(root: menu, options: options) do
+        render_menu(root)
       end
     end
 
-    # Starting a new root menu or submenu (e.g. `<ul>` tag)
+    # Start a new root menu or submenu (e.g. `<ul>` tag)
     #
     # @param menu [Menu]
     # @return [Arbre::HTML::Tag]
-    def menu(menu)
-      ul do
-        menu.each do |item|
-          item_container item
-        end
-      end
+    def menu_tag(menu) # rubocop:disable Lint/UnusedMethodArgument
+      ul { yield }
     end
 
     # The container for every menu item (e.g. `<li>` tags)
     #
     # @param item [Item]
     # @return [Arbre::HTML::Tag]
-    def item_container(item)
-      li(class: css_classes_string(item, :item_container)) do
-        item_content item
-
-        menu(item.submenu) if item.submenu?
-      end
+    def item_tag(item) # rubocop:disable Lint/UnusedMethodArgument
+      li { yield }
     end
 
-    # The item itself (e.g. `<a>` tag for links)
+    # The item itself (e.g. `<a>` tag for links or `<span>` for text)
     #
     # @param item [Item]
     # @return [Arbre::HTML::Tag]
@@ -51,37 +46,50 @@ module Navtastic
       if item.url
         a(href: item.url) { item.name }
       else
-        span item.name
+        span { item.name }
       end
     end
 
-    # Decide which css classes are needed for this item
+    # Check if a submenu should be displayed inside the item container of after
+    # it.
     #
-    # For example, the {#item_container} uses this to retrieve the css class for
-    # the current active item.
+    # Defaults to `true`.
     #
-    # @param item [Item] the current item that is rendered
-    # @param context [Symbol] which method is asking for the css classes
-    #
-    # @return [Array<String>] list of css classes to apply to the HTML element
-    def css_classes(item, context)
-      classes = []
-
-      case context
-      when :item_container
-        classes << 'current' if item.current?
-      end
-
-      classes
+    # @param item [Item]
+    # @return [bool]
+    def menu_inside_container?(item) # rubocop:disable Lint/UnusedMethodArgument
+      true
     end
 
-    # Same as {css_classes} method, but joins classes together in a string
+    private
+
+    # Render the menu structure
     #
-    # @see css_classes
+    # @param menu [Menu]
+    # @return [Arbre::HTML::Tag]
+    def render_menu(menu)
+      menu_tag(menu) do
+        menu.each do |item|
+          render_item(item)
+        end
+      end
+    end
+
+    # Render the item structure
     #
-    # @return [String]
-    def css_classes_string(item, context)
-      css_classes(item, context).join ' '
+    # @param item [Item]
+    # @return [Arbre::HTML::Tag]
+    def render_item(item)
+      item_tag(item) do
+        item_content(item)
+
+        if item.submenu? && menu_inside_container?(item)
+          render_menu(item.submenu)
+        end
+      end
+
+      return unless item.submenu? && !menu_inside_container?(item)
+      render_menu(item.submenu)
     end
   end
 end

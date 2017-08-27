@@ -14,7 +14,7 @@ class DemoServer
       # A poor man's hot reload. Just reload everything on every request.
       Object.send(:remove_const, :Navtastic) if Object.constants.include?(:Navtastic)
 
-      Dir.glob('lib/**/*.rb').each do |file|
+      Dir.glob('lib/**/*.rb').sort_by(&:length).each do |file|
         load file
       end
     end
@@ -23,12 +23,13 @@ class DemoServer
     WEBrick::HTTPUtils::DefaultMimeTypes.store('rhtml', 'text/html')
 
     # Mount servlets
-    #s.mount('/', HTTPServlet::FileHandler, Dir.pwd)
-    s.mount '/', MenuServlet
+    s.mount '/', WEBrick::HTTPServlet::ERBHandler, File.expand_path('../index.rhtml', __FILE__)
+    s.mount '/simple', RendererServlet, :simple
+    s.mount '/bulma', RendererServlet, :bulma
 
     # Trap signals so as to shutdown cleanly.
     ['TERM', 'INT'].each do |signal|
-      trap(signal){ s.shutdown }
+      trap(signal) { s.shutdown }
     end
 
     # Start the server and block on input.
@@ -36,19 +37,27 @@ class DemoServer
   end
 end
 
-class MenuServlet < WEBrick::HTTPServlet::AbstractServlet
-  def do_GET(request, response)
-    response.status = 200
-    response['Content-Type'] = 'text/html'
-    response.body = render_page request
+class RendererServlet < WEBrick::HTTPServlet::AbstractServlet
+  def initialize(server, renderer)
+    @renderer = renderer
   end
 
-  def render_page(request)
-    template_file = File.expand_path('../index.rhtml', __FILE__)
+  def do_GET(request, response)
+    @request = request
+
+    response.status = 200
+    response['Content-Type'] = 'text/html'
+    response.body = render_page
+  end
+
+  def render_page
+    template_file = File.expand_path("../renderer/#{@renderer}.rhtml", __FILE__)
     template_string = File.read template_file
 
-    current_url = request.path
-
     ERB.new(template_string).result(binding)
+  end
+
+  def current_url
+    @request.path
   end
 end

@@ -5,7 +5,7 @@ RSpec.describe Navtastic::Configuration do
     subject(:configuration) { described_class.new }
 
     expected_defaults = {
-      renderer: Navtastic::Renderer
+      renderer: Navtastic::Renderer::Simple
     }
 
     expected_defaults.each do |key, value|
@@ -24,7 +24,7 @@ RSpec.describe Navtastic::Configuration do
       expect { Navtastic.reset_configuration }
         .to change { Navtastic.configuration.renderer }
         .from(:foo)
-        .to(Navtastic::Renderer)
+        .to(Navtastic::Renderer::Simple)
     end
   end
 
