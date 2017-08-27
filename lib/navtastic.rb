@@ -3,6 +3,7 @@ require 'navtastic/item'
 require 'navtastic/menu'
 require 'navtastic/renderer'
 require 'navtastic/renderer/bulma'
+require 'navtastic/renderer/foundation6'
 require 'navtastic/renderer/simple'
 require 'navtastic/version'
 

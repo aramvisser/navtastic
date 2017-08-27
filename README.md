@@ -11,7 +11,8 @@ configurations of menus, depending on context.
 
 - Keep menu content and rendering logic separate
 - Automatically highlight the current page
-- Different output structures supported (Simple, [Bulma](http://bulma.io))
+- Different output structures supported (Simple, [Bulma](http://bulma.io),
+  [Foundation6](http://foundation.zurb.com/))
   - HTML structure only, bring your own CSS.
 
 ## Table of Contents
@@ -175,6 +176,14 @@ The following renders are currently available:
 - `Navtastic::Renderer::Bulma` has support for the <a
   href="http://bulma.io">Bulma.io</a> framework.
 
+You can set the renderer to use when configuring Navtastic:
+
+```ruby
+Navtastic.configure do |config|
+  config.renderer = Navtastic::Renderer::Bulma
+end
+```
+
 Some renderers also support extra options that you can pass when rendering a
 menu:
 
@@ -193,5 +202,25 @@ menu:
     <figure>
       <img src="docs/bulma_headers_preview.png"><br>
       <figcaption>left: <code>headers: false</code>, right: <code>headers: true</code></legend>
+    </figure>
+  </div>
+
+#### Foundation Configuration
+
+- **active_class** (default: `nil`)
+
+  CSS class to use for active items. Active items are items that have a child that is the current
+  item. Useful to highlight the current item in a drilldown menu.
+
+- **style** (default: `nil`)
+
+  Set to `:drilldown` to generate [a drilldown
+  menu](http://foundation.zurb.com/sites/docs/drilldown-menu.html). Make sure you include the
+  required javascript files.
+
+  <div align="center">
+    <figure>
+      <img src="docs/foundation_styles_preview.png"><br>
+      <figcaption>left: default style, right: drilldown style</figcaption>
     </figure>
   </div>
