@@ -1,0 +1,49 @@
+<%
+Navtastic.configure do |config|
+  config.renderer = Navtastic::Renderer::Foundation6
+end
+
+Navtastic.define :main_menu do |menu|
+  menu.item "General" do |generalmenu|
+    generalmenu.item "Dashboard", '/foundation6'
+    generalmenu.item "Customers", '/foundation6/customers'
+  end
+
+  menu.item "Administration" do |adminmenu|
+    adminmenu.item "Team Settings", '/foundation6/team'
+    adminmenu.item "Manage Your Team", '/foundation6/manage' do |teammenu|
+      teammenu.item "Members", '/foundation6/manage/'
+      teammenu.item "Plugins", '/foundation6/manage/plugins'
+      teammenu.item "Add a member", '/foundation6/manage/members'
+    end
+    adminmenu.item "Invitations", '/foundation6/invitations'
+    adminmenu.item "Cloud Storage Environment Settings", '/foundation6/cloud'
+    adminmenu.item "Authentication", '/foundation6/authentication'
+  end
+
+  menu.item "Other renderers" do |rendermenu|
+    rendermenu.item "Overview", '/'
+    rendermenu.item "Simple", '/simple'
+    rendermenu.item "Bulma", '/bulma'
+  end
+end
+%>
+
+<html>
+  <head>
+    <title>Navtastic Foundation6 Renderer</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.css">
+  </head>
+
+  <body>
+    <div class="grid-container">
+      <p>Menu example is taken directly from <a href="http://bulma.io/documentation/components/menu/">the Bulma documentation</a>.</p>
+
+      <div style="max-width: 300px">
+        <%= Navtastic.render :main_menu, current_url %>
+      </div>
+    </div>
+
+    <pre>current_url: <%= current_url %></pre>
+  </body>
+</html>

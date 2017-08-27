@@ -26,6 +26,7 @@ class DemoServer
     s.mount '/', WEBrick::HTTPServlet::ERBHandler, File.expand_path('../index.rhtml', __FILE__)
     s.mount '/simple', RendererServlet, :simple
     s.mount '/bulma', RendererServlet, :bulma
+    s.mount '/foundation6', RendererServlet, :foundation6
 
     # Trap signals so as to shutdown cleanly.
     ['TERM', 'INT'].each do |signal|
