@@ -32,18 +32,47 @@ end
 <html>
   <head>
     <title>Navtastic Foundation6 Renderer</title>
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.0/css/foundation.min.css">
+
+    <style>
+      .is-selected {
+        font-weight: bold;
+      }
+    </style>
   </head>
 
   <body>
     <div class="grid-container">
       <p>Menu example is taken directly from <a href="http://bulma.io/documentation/components/menu/">the Bulma documentation</a>.</p>
 
-      <div style="max-width: 300px">
-        <%= Navtastic.render :main_menu, current_url %>
+      <div class="grid-x">
+        <div class="auto cell">
+          <h1>Default style</h1>
+          <code>{}</code>
+
+          <div style="width: 300px">
+            <%= Navtastic.render :main_menu, current_url %>
+          </div>
+        </div>
+
+        <div class="auto cell">
+          <h1>Drilldown style</h1>
+          <code>{ style: :drilldown, active_class: 'is-selected' }</code>
+
+          <div style="width: 300px">
+            <%= Navtastic.render :main_menu, current_url, renderer: { style: :drilldown, active_class: 'is-selected' } %>
+          </div>
+        </div>
       </div>
     </div>
 
     <pre>current_url: <%= current_url %></pre>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js"></script>
+
+    <script>
+      $(document).foundation();
+    </script>
   </body>
 </html>

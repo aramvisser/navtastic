@@ -40,6 +40,21 @@ module Navtastic
       @menu.current_item == self
     end
 
+    # Check if the item has a current child in its submenu (or deeper)
+    # 
+    # Also returns true if this is the current item.
+    #
+    # @see file:README.md#Current_item documentation on how the current item is
+    #   selected
+    #
+    # @return [Bool] if the item is the current item
+    def active?
+      return true if current?
+      return false unless submenu
+
+      submenu.any?(&:active?)
+    end
+
     # @return [Bool] true if the item has a submenu, false other
     def submenu?
       !@submenu.nil?
@@ -47,6 +62,13 @@ module Navtastic
 
     def inspect
       "#<Item \"#{name}\" [#{url}] current?:#{current?}>"
+    end
+
+    # Check if item has a link or not
+    #
+    # @return [Bool]
+    def url?
+      !url.nil?
     end
   end
 end
