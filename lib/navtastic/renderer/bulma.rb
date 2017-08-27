@@ -3,7 +3,8 @@ require 'arbre'
 module Navtastic
   class Renderer
     # This renderer adds css classes and structure for the bulma.io framework
-    # @see file:README.md#Bulma documentation on renderer options
+    # @see file:README.md#Bulma_Configuration documentation on bulma renderer
+    #   options
     class Bulma < Navtastic::Renderer
       def submenu_inside_container?(item)
         !(headers? && item.menu.root?)

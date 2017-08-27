@@ -11,6 +11,8 @@ configurations of menus, depending on context.
 
 - Keep menu content and rendering logic separate
 - Automatically highlight the current page
+- Different output structures supported (Simple, [Bulma](http://bulma.io))
+  - HTML structure only, bring your own CSS.
 
 ## Table of Contents
 
@@ -21,6 +23,7 @@ configurations of menus, depending on context.
   - [Current item](#current-item)
   - [Runtime parameters](#runtime-parameters)
   - [Configuration](#configuration)
+  - [Renderers](#renderers)
 
 ## Installation
 
@@ -72,7 +75,7 @@ Using the default renderer, assuming that the current url starts with `/posts`, 
 
 ## Documentation
 
-## Submenus
+### Submenus
 
 Every item can have a submenu. They can be nested as deeply as you want.
 
@@ -159,4 +162,36 @@ The following options are available:
 
 - **renderer** (default: `Navtastic::Renderer::Simple`)
 
-  Which renderer to use when displaying a menu.
+  Which renderer to use when displaying a menu. See [Renderers](#renderers) to
+  see which ones are available.
+
+### Renderers
+
+The following renders are currently available:
+
+- `Navtastic::Renderer` only has a basic list structure
+- `Navtastic::Renderer::Simple` adds a `current` class to the basic list
+  structure
+- `Navtastic::Renderer::Bulma` has support for the <a
+  href="http://bulma.io">Bulma.io</a> framework.
+
+Some renderers also support extra options that you can pass when rendering a
+menu:
+
+```erb
+<%= Navtastic.render :menu, current_url, renderer: { option: value } %>
+```
+
+#### Bulma Configuration
+
+- **headers** (default: `false`)
+
+  Top level items are styled differently. Works best if they are only text, not
+  links.
+
+  <div align="center">
+    <figure>
+      <img src="docs/bulma_headers_preview.png"><br>
+      <figcaption>left: <code>headers: false</code>, right: <code>headers: true</code></legend>
+    </figure>
+  </div>
