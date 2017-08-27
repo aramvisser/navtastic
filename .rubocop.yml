@@ -10,9 +10,15 @@ AllCops:
     - 'vendor/**/*'
   TargetRubyVersion: 2.4
 
+Metrics/AbcSize:
+  Max: 20
+
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*_spec.rb'
+
+Metrics/MethodLength:
+  Max: 15
 
 Style/FrozenStringLiteralComment:
   Enabled: false

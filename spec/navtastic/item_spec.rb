@@ -13,6 +13,8 @@ RSpec.describe Navtastic::Item do
   end
 
   describe '#active?' do
+    subject { item.active? }
+
     let(:menu) do
       menu = Navtastic::Menu.new
       menu.item "Root", '/' do |submenu|
@@ -23,22 +25,18 @@ RSpec.describe Navtastic::Item do
       menu
     end
 
-    subject { item.active? }
-
-    context "when the item has a submenu" do
+    context "when the item has an active child" do
       let(:item) { menu['/'] }
+      let(:current_url) { '/sub' }
 
-      context "and the submenu has an active child" do
-        let(:current_url) { '/sub' }
+      it { is_expected.to eq true }
+    end
 
-        it { is_expected.to eq true }
-      end
+    context "when the item does not have an active child" do
+      let(:item) { menu['/'] }
+      let(:current_url) { '/foo' }
 
-      context "and the submenu does not have an active child" do
-        let(:current_url) { '/foo' }
-
-        it { is_expected.to eq false }
-      end
+      it { is_expected.to eq false }
     end
 
     context "when the item has no submenu" do

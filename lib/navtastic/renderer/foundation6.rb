@@ -12,7 +12,7 @@ module Navtastic
         class_list << 'vertical' if vertical?
         class_list << 'nested' unless menu.root?
 
-        list = ul(class: class_list.join(' '), ) { yield }
+        list = ul(class: class_list.join(' ')) { yield }
 
         if drilldown? && menu.root?
           list.class_list << 'drilldown'
@@ -24,22 +24,18 @@ module Navtastic
 
       def item_tag(item)
         element = super(item)
-        
-        if item.current?
-          element.class_list << 'is-active'
-        end
-
+        element.class_list << 'is-active' if item.current?
         element
       end
 
       def item_content(item)
         element = if item.url?
-          a(href: item.url) { item.name }
-        elsif drilldown?
-          a(href: '#') { item.name }
-        else
-          span(class: 'menu-text') { item.name }
-        end
+                    a(href: item.url) { item.name }
+                  elsif drilldown?
+                    a(href: '#') { item.name }
+                  else
+                    span(class: 'menu-text') { item.name }
+                  end
 
         if drilldown? && item.active? && options[:active_class]
           element.class_list << options[:active_class]

@@ -41,7 +41,7 @@ module Navtastic
     end
 
     # Check if the item has a current child in its submenu (or deeper)
-    # 
+    #
     # Also returns true if this is the current item.
     #
     # @see file:README.md#Current_item documentation on how the current item is
