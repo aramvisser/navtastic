@@ -5,7 +5,7 @@
 ### Added
 
 - Configuration options
-- Bulma Renderer
+- New Renderers: Bulma, Foundation 6
 
 ## 0.0.1 - 2017-08-21
 

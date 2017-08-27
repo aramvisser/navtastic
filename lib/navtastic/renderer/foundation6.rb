@@ -4,6 +4,8 @@ module Navtastic
   class Renderer
     # This renderer adds css classes and structure for the foundation 6
     # framework
+    # @see file:README.md#Foundation_Configuration documentation on foundation
+    #   renderer options
     class Foundation6 < Navtastic::Renderer
       def menu_tag(menu)
         class_list = ['menu']
