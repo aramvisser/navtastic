@@ -173,8 +173,12 @@ The following renders are currently available:
 - `Navtastic::Renderer` only has a basic list structure
 - `Navtastic::Renderer::Simple` adds a `current` class to the basic list
   structure
+- `Navtastic::Renderer::Bootstrap4` has support for the <a
+  href="https://getbootstrap.com/">Bootstrap 4</a> framework.
 - `Navtastic::Renderer::Bulma` has support for the <a
   href="http://bulma.io">Bulma.io</a> framework.
+- `Navtastic::Renderer::Foundation6` has support for the <a
+  href="http://foundation.zurb.com/sites.html">Foundation for Sites 6</a> framework.
 
 You can set the renderer to use when configuring Navtastic:
 

@@ -1,0 +1,53 @@
+<%
+Navtastic.configure do |config|
+  config.renderer = Navtastic::Renderer::Bootstrap4
+end
+
+Navtastic.define :main_menu do |menu|
+  menu.item "General" do |generalmenu|
+    generalmenu.item "Dashboard", '/bootstrap4'
+    generalmenu.item "Customers", '/bootstrap4/customers'
+  end
+
+  menu.item "Administration" do |adminmenu|
+    adminmenu.item "Team Settings", '/bootstrap4/team'
+    adminmenu.item "Manage Your Team", '/bootstrap4/manage' do |teammenu|
+      teammenu.item "Members", '/bootstrap4/manage/'
+      teammenu.item "Plugins", '/bootstrap4/manage/plugins'
+      teammenu.item "Add a member", '/bootstrap4/manage/members'
+    end
+    adminmenu.item "Invitations", '/bootstrap4/invitations'
+    adminmenu.item "Cloud Storage Environment Settings", '/bootstrap4/cloud'
+    adminmenu.item "Authentication", '/bootstrap4/authentication'
+  end
+
+  menu.item "Other renderers" do |rendermenu|
+    rendermenu.item "Overview", '/'
+    rendermenu.item "Simple", '/simple'
+    rendermenu.item "Bulma", '/bulma'
+    rendermenu.item "Foundation6", '/foundation6'
+  end
+end
+%>
+
+<html>
+  <head>
+    <title>Navtastic Bootstrap4 Renderer</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css">
+
+    <style>
+      a.active {
+        font-weight: bold;
+      }
+
+      ul.nav ul {
+        margin-left: 2rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <%= Navtastic.render :main_menu, current_url %>
+  </body>
+</html>

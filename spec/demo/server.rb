@@ -25,6 +25,7 @@ class DemoServer
     # Mount servlets
     s.mount '/', WEBrick::HTTPServlet::ERBHandler, File.expand_path('../index.rhtml', __FILE__)
     s.mount '/simple', RendererServlet, :simple
+    s.mount '/bootstrap4', RendererServlet, :bootstrap4
     s.mount '/bulma', RendererServlet, :bulma
     s.mount '/foundation6', RendererServlet, :foundation6
 
