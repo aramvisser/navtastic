@@ -6,6 +6,7 @@ RSpec.describe Navtastic::Configuration do
 
     expected_defaults = {
       renderer: Navtastic::Renderer::Simple,
+      renderer_options: {},
     }
 
     expected_defaults.each do |key, value|

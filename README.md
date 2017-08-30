@@ -159,6 +159,9 @@ Navtastic.configure do |config|
   # Set the renderer to use, can be one of :simple, :bootstrap4, :bulma, :foundation6
   # Can also be a class if you want to use a custom renderer
   config.renderer = :simple
+
+  # Options that are passed to the renderer
+  config.renderer_options = {}
 end
 ```
 
@@ -171,11 +174,23 @@ The following renders are currently available:
 - **Bulma** is used with the [Bulma.io](http://bulma.io) framework.
 - **Foundation6** is used with the [Foundation 6](http://foundation.zurb.com/sites.html) framework.
 
-Some renderers also support extra options that you can pass when rendering a menu:
+Some renderers also support extra options. You can set them globally in the configuration or pass
+them at runtime when rendering a menu:
+
+```ruby
+# Global options
+Navtastic.configure do |config|
+  config.renderer_options = { option: value }
+end
+```
 
 ```erb
+# Runtime options
 <%= Navtastic.render :menu, current_url, renderer: { option: value } %>
 ```
+
+Globally defined options and options given at runtime are merged together, with those at runtime
+taking precedence.
 
 #### Bulma Configuration
 

@@ -8,8 +8,16 @@ module Navtastic # :nodoc:
     # @return any class that responds to the `.render` method
     attr_reader :renderer
 
+    # Default options passed to the current renderer
+    #
+    # Defaults to empty Hash
+    #
+    # @return Hash
+    attr_accessor :renderer_options
+
     def initialize
       @renderer = Navtastic::Renderer::Simple
+      @renderer_options = {}
     end
 
     # Set the renderer to use for displaying a menu

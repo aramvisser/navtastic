@@ -58,8 +58,9 @@ module Navtastic
 
     raise KeyError, "menu not defined: #{name.inspect}" if block.nil?
 
-    # Remove renderer options from parameters
-    renderer_options = params.delete(:renderer) || {}
+    # Merge renderer options globally with those passed at runtime
+    renderer_options = configuration.renderer_options
+    renderer_options.merge!(params.delete(:renderer) || {})
 
     menu = Menu.new
     block.call(menu, params)

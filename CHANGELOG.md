@@ -6,6 +6,7 @@
 
 - Configuration options
 - New Renderers: Bootstrap4, Bulma, Foundation 6
+  - Only vertical menus are supported for now
 
 ## 0.0.1 - 2017-08-21
 

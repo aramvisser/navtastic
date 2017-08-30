@@ -64,11 +64,25 @@ RSpec.describe Navtastic do
       end
     end
 
-    context "when params contains a renderer key" do
-      let(:params) { { renderer: :foo } }
+    context "when rendering options have been set in the configuration" do
+      before { set_configuration renderer_options: { foo: :bar } }
 
       it "passes the options to the renderer" do
-        expect(render.options).to eq :foo
+        expect(render.options).to eq(foo: :bar)
+      end
+    end
+
+    context "when params contains a renderer key" do
+      before { set_configuration renderer_options: { foo: :bar } }
+
+      let(:params) { { renderer: { foo: :foo, key: :value } } }
+
+      it "passes the options to the renderer" do
+        expect(render.options[:key]).to eq :value
+      end
+
+      it "merges them with the globally configured settings" do
+        expect(render.options[:foo]).to eq :foo
       end
     end
   end
