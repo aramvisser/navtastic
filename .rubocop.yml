@@ -25,3 +25,7 @@ Style/FrozenStringLiteralComment:
 
 Style/StringLiterals:
   Enabled: false
+
+Style/TrailingCommaInLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+  

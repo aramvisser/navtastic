@@ -11,8 +11,7 @@ configurations of menus, depending on context.
 
 - Keep menu content and rendering logic separate
 - Automatically highlight the current page
-- Different output structures supported (Simple, [Bulma](http://bulma.io),
-  [Foundation6](http://foundation.zurb.com/))
+- Different output structures supported (Simple, Bootstrap4, Bulma, Foundation6)
   - HTML structure only, bring your own CSS.
 
 ## Table of Contents
@@ -153,43 +152,26 @@ Navtastic.render :main_menu, current_url, current_user: User.current
 Some global settings that Navtastic uses can be configured. Make sure the configuration happens
 before defining any menu (e.g. when using rails, add it to `config/initializers/navtastic.rb`).
 
+These are the defaults values:
+
 ```ruby
 Navtastic.configure do |config|
-  config.option = value
+  # Set the renderer to use, can be one of :simple, :bootstrap4, :bulma, :foundation6
+  # Can also be a class if you want to use a custom renderer
+  config.renderer = :simple
 end
 ```
-
-The following options are available:
-
-- **renderer** (default: `Navtastic::Renderer::Simple`)
-
-  Which renderer to use when displaying a menu. See [Renderers](#renderers) to
-  see which ones are available.
 
 ### Renderers
 
 The following renders are currently available:
 
-- `Navtastic::Renderer` only has a basic list structure
-- `Navtastic::Renderer::Simple` adds a `current` class to the basic list
-  structure
-- `Navtastic::Renderer::Bootstrap4` has support for the <a
-  href="https://getbootstrap.com/">Bootstrap 4</a> framework.
-- `Navtastic::Renderer::Bulma` has support for the <a
-  href="http://bulma.io">Bulma.io</a> framework.
-- `Navtastic::Renderer::Foundation6` has support for the <a
-  href="http://foundation.zurb.com/sites.html">Foundation for Sites 6</a> framework.
+- **Simple** adds a `current` class to the basic list structure
+- **Bootstrap4** is used with the [Bootstrap 4](https://getbootstrap.com) framework.
+- **Bulma** is used with the [Bulma.io](http://bulma.io) framework.
+- **Foundation6** is used with the [Foundation 6](http://foundation.zurb.com/sites.html) framework.
 
-You can set the renderer to use when configuring Navtastic:
-
-```ruby
-Navtastic.configure do |config|
-  config.renderer = Navtastic::Renderer::Bulma
-end
-```
-
-Some renderers also support extra options that you can pass when rendering a
-menu:
+Some renderers also support extra options that you can pass when rendering a menu:
 
 ```erb
 <%= Navtastic.render :menu, current_url, renderer: { option: value } %>

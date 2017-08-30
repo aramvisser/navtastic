@@ -6,10 +6,41 @@ module Navtastic # :nodoc:
     # Defaults to {Navtastic::Renderer::Simple}.
     #
     # @return any class that responds to the `.render` method
-    attr_accessor :renderer
+    attr_reader :renderer
 
     def initialize
       @renderer = Navtastic::Renderer::Simple
+    end
+
+    # Set the renderer to use for displaying a menu
+    #
+    # @param value [Symbol,Class]
+    def renderer=(value)
+      if value.is_a? Symbol
+        renderers = available_renderers
+
+        unless renderers.key? value
+          raise ArgumentError, "Unknown renderer: #{value}"
+        end
+
+        @renderer = renderers[value]
+      else
+        @renderer = value
+      end
+    end
+
+    private
+
+    # Built in renderers
+    #
+    # @return Hash
+    def available_renderers
+      {
+        bootstrap4: Renderer::Bootstrap4,
+        bulma: Renderer::Bulma,
+        foundation6: Renderer::Foundation6,
+        simple: Renderer::Simple,
+      }
     end
   end
 

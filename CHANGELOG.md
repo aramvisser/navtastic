@@ -5,7 +5,7 @@
 ### Added
 
 - Configuration options
-- New Renderers: Bulma, Foundation 6
+- New Renderers: Bootstrap4, Bulma, Foundation 6
 
 ## 0.0.1 - 2017-08-21
 
