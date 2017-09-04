@@ -21,6 +21,7 @@ configurations of menus, depending on context.
 - [Documentation](#documentation)
   - [Submenus](#submenus)
   - [Current item](#current-item)
+  - [Custom classes](#custom-classes)
   - [Runtime parameters](#runtime-parameters)
   - [Configuration](#configuration)
   - [Renderers](#renderers)
@@ -163,6 +164,31 @@ Navtastic.configure do |config|
   # Options that are passed to the renderer
   config.renderer_options = {}
 end
+```
+
+### Custom classes
+
+Every item can have custom css classes added to it:
+
+```ruby
+Navtastic.define :menu do |menu|
+  menu.item "Home", "/", class: 'highlight'
+  menu.item "Posts", "/posts", content_class: 'important'
+end
+```
+
+The `class` option puts the css class on the container (e.g. `<li>` tag), while the `content_class`
+option puts it inside the container (the `<a>` tag). So the above would render to:
+
+```html
+<ul>
+  <li class="highlight">
+    <a href="/">Home</a>
+  </li>
+  <li>
+    <a href="/posts" class="important">Posts</a>
+  </li>
+</ul>
 ```
 
 ### Renderers

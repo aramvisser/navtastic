@@ -80,15 +80,30 @@ module Navtastic
     # @param item [Item]
     # @return [Arbre::HTML::Tag]
     def render_item(item)
-      item_tag(item) do
-        item_content(item)
-
-        if item.submenu? && menu_inside_container?(item)
-          render_menu(item.submenu)
-        end
+      element = item_tag(item) do
+        render_item_content(item)
       end
 
+      # Add custom css classes to the element
+      element.class_list << item.options[:class] if item.options[:class]
+
       return unless item.submenu? && !menu_inside_container?(item)
+      render_menu(item.submenu)
+    end
+
+    # Render the item content
+    #
+    # @param item [Item]
+    # @return [Arbre::HTML::Tag]
+    def render_item_content(item)
+      element = item_content(item)
+
+      # Add custom css classes to the element
+      if item.options[:content_class] && element.respond_to?(:class_list)
+        element.class_list << item.options[:content_class]
+      end
+
+      return unless item.submenu? && menu_inside_container?(item)
       render_menu(item.submenu)
     end
   end

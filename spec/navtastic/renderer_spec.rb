@@ -35,4 +35,27 @@ RSpec.describe Navtastic::Renderer do
       end
     end
   end
+
+  describe '#render_item' do
+    context "when an item has custom classes as an option" do
+      subject(:output) { described_class.render(menu) }
+
+      let(:menu) do
+        menu = Navtastic::Menu.new
+        menu.item "a", '/a', class: 'class_a'
+        menu.item "b", '/b', content_class: 'class_b'
+        menu
+      end
+
+      it "adds custom classes to the item container" do
+        first_item = output.find_by_tag('li').first
+        expect(first_item.class_list).to include 'class_a'
+      end
+
+      it "adds custom classes to the item content" do
+        last_item = output.find_by_tag('li').last
+        expect(last_item.children.first.class_list).to include 'class_b'
+      end
+    end
+  end
 end
