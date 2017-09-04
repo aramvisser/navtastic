@@ -10,6 +10,9 @@ module Navtastic
     # @return [String,nil] the url to link to if item is a link, nil otherwise
     attr_reader :url
 
+    # @return [Hash] extra options to configure individual items
+    attr_reader :options
+
     # @return [Menu,nil] the submenu of this item, if defined
     attr_accessor :submenu
 
@@ -22,10 +25,12 @@ module Navtastic
     # @param menu [Menu] the menu this items belongs to
     # @param name [String] the name to display when rendering
     # @param url [String] the url to link to, if the item is a link
-    def initialize(menu, name, url = nil)
+    # @param options [Hash] extra configuration options
+    def initialize(menu, name, url = nil, options = {})
       @menu = menu
       @name = name
       @url = url
+      @options = options
 
       @submenu = nil
     end

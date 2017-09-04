@@ -43,11 +43,18 @@ module Navtastic
     #
     # @param name [String]the name to display in the menu
     # @param url [String] the url to link to, if the item is a link
+    # @param options [Hash] extra confiration options
     #
     # @yield [submenu] block to generate a sub menu
     # @yieldparam submenu [Menu] the menu to be initialized
-    def item(name, url = nil)
-      item = Item.new(self, name, url)
+    def item(name, url = nil, options = {})
+      # If only options were given and no url, move options to the right place
+      if url.is_a?(Hash) && options.empty?
+        options = url
+        url = nil
+      end
+
+      item = Item.new(self, name, url, options)
 
       if block_given?
         submenu = Menu.new(self)

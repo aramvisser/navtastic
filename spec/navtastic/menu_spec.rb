@@ -46,7 +46,7 @@ RSpec.describe Navtastic::Menu do
       expect(menu.item("Test")).to eq menu.items.last
     end
 
-    context "with 1 argument" do
+    context "with only a name" do
       before { menu.item name }
 
       let(:name) { "Test" }
@@ -61,7 +61,7 @@ RSpec.describe Navtastic::Menu do
       end
     end
 
-    context "with 2 arguments" do
+    context "with a name and a url" do
       before { menu.item name, url }
 
       let(:name) { "Test" }
@@ -77,10 +77,53 @@ RSpec.describe Navtastic::Menu do
       end
     end
 
+    context "with a name, url and options" do
+      before { menu.item name, url, options }
+
+      let(:name) { "Test" }
+      let(:url) { "/url" }
+      let(:options) { { class: 'test' } }
+
+      let(:item) { menu.items.last }
+
+      it "sets the name" do
+        expect(item.name).to eq name
+      end
+
+      it "sets the url" do
+        expect(item.url).to eq url
+      end
+
+      it "sets the options" do
+        expect(item.options).to eq options
+      end
+    end
+
+    context "with a name and options" do
+      before { menu.item name, options }
+
+      let(:name) { "Test" }
+      let(:options) { { class: 'test' } }
+
+      let(:item) { menu.items.last }
+
+      it "sets the name" do
+        expect(item.name).to eq name
+      end
+
+      it "leaves the url empty" do
+        expect(item.url).to eq nil
+      end
+
+      it "sets the options" do
+        expect(item.options).to eq options
+      end
+    end
+
     context "when the item has a submenu" do
       let(:item) { menu.items.first }
 
-      it "adds the menu to the itme" do
+      it "adds the menu to the item" do
         expect(item.submenu).not_to eq nil
       end
     end
