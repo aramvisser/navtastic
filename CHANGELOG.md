@@ -5,6 +5,7 @@
 ### Added
 
 - Configuration options
+- Base urls
 - New Renderers: Bootstrap4, Bulma, Foundation 6
   - Only vertical menus are supported for now
 

@@ -13,6 +13,9 @@ configurations of menus, depending on context.
 - Automatically highlight the current page
 - Different output structures supported (Simple, Bootstrap4, Bulma, Foundation6)
   - HTML structure only, bring your own CSS.
+- Easily create your own renderer to fit your style.
+
+_The current renderers only support vertical menus. Horizontal (navbar) menus are planned._
 
 ## Table of Contents
 
@@ -27,6 +30,7 @@ configurations of menus, depending on context.
   - [Menu Configuration](#menu-configuration)
   - [Item Configuration](#item-configuration)
   - [Renderers](#renderers)
+- [Development](#development)
 
 ## Installation
 
@@ -261,3 +265,14 @@ taking precedence.
       <figcaption>left: default style, right: drilldown style</figcaption>
     </figure>
   </div>
+
+## Development
+
+1. Checkout Repository: `git clone https://github.com/aramvisser/navtastic.git`
+2. Install Bundler: `gem install bundler`
+3. Run `bundle install` inside the project root to install the gem dependencies
+4. Run test cases: `bundle exec rake`
+
+For testing visual changes, a test server is provided by running `bundle exec rake demo`. It's
+accessibly on http://localhost:9090.
+
