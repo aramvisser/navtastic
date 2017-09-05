@@ -1,6 +1,13 @@
 module Navtastic # :nodoc:
   # Configuration settings
   class Configuration
+    # The base url will be prepended to every item url
+    #
+    # Defaults to nil.
+    #
+    # @return [String,nil]
+
+    attr_accessor :base_url
     # The default renderer to use when displaying a menu
     #
     # Defaults to {Navtastic::Renderer::Simple}.
@@ -10,14 +17,15 @@ module Navtastic # :nodoc:
 
     # Default options passed to the current renderer
     #
-    # Defaults to empty Hash
+    # Defaults to empty Hash.
     #
-    # @return Hash
+    # @return [Hash]
     attr_accessor :renderer_options
 
     def initialize
       @renderer = Navtastic::Renderer::Simple
       @renderer_options = {}
+      @base_url = nil
     end
 
     # Set the renderer to use for displaying a menu

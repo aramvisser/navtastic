@@ -5,6 +5,7 @@ RSpec.describe Navtastic::Configuration do
     subject(:configuration) { described_class.new }
 
     expected_defaults = {
+      base_url: nil,
       renderer: Navtastic::Renderer::Simple,
       renderer_options: {},
     }

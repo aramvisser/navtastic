@@ -251,4 +251,38 @@ RSpec.describe Navtastic::Menu do
       end
     end
   end
+
+  describe '#base_url' do
+    subject(:url) { menu.base_url }
+
+    let(:menu) { described_class.new }
+
+    context "when the menu has no base_url" do
+      it { is_expected.to eq nil }
+    end
+
+    context "when the menu has a base_url" do
+      before { menu.config.base_url = '/admin' }
+
+      it "returns that base url" do
+        expect(url).to eq '/admin'
+      end
+    end
+
+    context "when a base url has been defined globally and on both menus" do
+      before do
+        set_configuration base_url: '/admin'
+        menu.config.base_url = '/settings'
+        submenu.config.base_url = '/general'
+      end
+
+      subject(:url) { submenu.base_url }
+
+      let(:submenu) { described_class.new menu }
+
+      it "combines all base urls together" do
+        expect(url).to eq '/admin/settings/general'
+      end
+    end
+  end
 end

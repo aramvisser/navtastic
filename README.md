@@ -159,6 +159,9 @@ These are the defaults values:
 
 ```ruby
 Navtastic.configure do |config|
+  # This url to prepend before every item url
+  config.base_url = nil
+
   # Set the renderer to use, can be one of :simple, :bootstrap4, :bulma, :foundation6
   # Can also be a class if you want to use a custom renderer
   config.renderer = :simple

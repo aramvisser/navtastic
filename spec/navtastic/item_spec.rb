@@ -83,20 +83,6 @@ RSpec.describe Navtastic::Item do
       end
     end
 
-    context "when the parent and sub menu have a base_url" do
-      let(:submenu) { Navtastic::Menu.new menu }
-      let(:item) { submenu.item "Things", '/things' }
-
-      before do
-        menu.config.base_url = '/admin'
-        submenu.config.base_url = '/settings'
-      end
-
-      it "prepends all base urls to the item" do
-        expect(url).to eq '/admin/settings/things'
-      end
-    end
-
     context "when the item is set to be as root" do
       before { menu.config.base_url = '/admin' }
 
