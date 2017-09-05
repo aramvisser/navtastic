@@ -7,9 +7,6 @@ module Navtastic
     # @return [String] the name to be displayed in the menu
     attr_reader :name
 
-    # @return [String,nil] the url to link to if item is a link, nil otherwise
-    attr_reader :url
-
     # @return [Hash] extra options to configure individual items
     attr_reader :options
 
@@ -57,7 +54,7 @@ module Navtastic
       return true if current?
       return false unless submenu
 
-      submenu.any?(&:active?)
+      submenu.items.any?(&:active?)
     end
 
     # @return [Bool] true if the item has a submenu, false other
@@ -73,7 +70,21 @@ module Navtastic
     #
     # @return [Bool]
     def url?
-      !url.nil?
+      !@url.nil?
+    end
+
+    # The url for this item, if the item has a url
+    #
+    # Will prepend the `base_url` for the menu if it is present
+    #
+    # @return [String,nil]
+    def url
+      return nil unless url?
+      return @url if options[:root]
+
+      url = "#{@menu.base_url}#{@url}"
+      url.chomp!('/') unless url == '/'
+      url
     end
   end
 end

@@ -5,28 +5,30 @@ end
 
 Navtastic.define :main_menu do |menu|
   menu.item "General" do |generalmenu|
-    generalmenu.item "Dashboard", '/bootstrap4'
-    generalmenu.item "Customers", '/bootstrap4/customers'
+    generalmenu.item "Dashboard", '/'
+    generalmenu.item "Customers", '/customers'
   end
 
   menu.item "Administration" do |adminmenu|
-    adminmenu.item "Team Settings", '/bootstrap4/team'
-    adminmenu.item "Manage Your Team", '/bootstrap4/manage' do |teammenu|
-      teammenu.item "Members", '/bootstrap4/manage/'
-      teammenu.item "Plugins", '/bootstrap4/manage/plugins'
-      teammenu.item "Add a member", '/bootstrap4/manage/members'
+    adminmenu.item "Team Settings", '/team'
+    adminmenu.item "Manage Your Team", '/manage' do |teammenu|
+      teammenu.item "Members", '/manage/members/'
+      teammenu.item "Plugins", '/manage/plugins'
+      teammenu.item "Add a member", '/manage/members/new'
     end
-    adminmenu.item "Invitations", '/bootstrap4/invitations'
-    adminmenu.item "Cloud Storage Environment Settings", '/bootstrap4/cloud'
-    adminmenu.item "Authentication", '/bootstrap4/authentication'
+    adminmenu.item "Invitations", '/invitations'
+    adminmenu.item "Cloud Storage Environment Settings", '/cloud'
+    adminmenu.item "Authentication", '/authentication'
   end
 
   menu.item "Other renderers" do |rendermenu|
-    rendermenu.item "Overview", '/'
-    rendermenu.item "Simple", '/simple'
-    rendermenu.item "Bulma", '/bulma'
-    rendermenu.item "Foundation6", '/foundation6'
+    rendermenu.item "Overview", '/', root: true
+    rendermenu.item "Simple", '/simple', root: true
+    rendermenu.item "Bulma", '/bulma', root: true
+    rendermenu.item "Foundation6", '/foundation6', root: true
   end
+
+  menu.config.base_url = '/bootstrap4'
 end
 %>
 

@@ -4,21 +4,23 @@ Navtastic.configure do |config|
 end
 
 Navtastic.define :main_menu do |menu|
-  menu.item "Home", '/simple' do |submenu|
-    submenu.item "Posts", '/simple/posts'
-    submenu.item "About", '/simple/about'
+  menu.item "Home", '/' do |submenu|
+    submenu.item "Posts", '/posts'
+    submenu.item "About", '/about'
   end
 
   menu.item "Settings" do |submenu|
-    submenu.item "General", '/simple/settings'
-    submenu.item "Profile", '/simple/settings/profile'
+    submenu.item "General", '/settings'
+    submenu.item "Profile", '/settings/profile'
   end
 
   menu.item "Other Renderers", '/' do |submenu|
-    submenu.item "Bootstrap4", '/bootstrap4'
-    submenu.item "Bulma", '/bulma'
-    submenu.item "Foundation6", '/foundation6'
+    submenu.item "Bootstrap4", '/bootstrap4', root: true
+    submenu.item "Bulma", '/bulma', root: true
+    submenu.item "Foundation6", '/foundation6', root: true
   end
+
+  menu.config.base_url = '/simple'
 end
 %>
 

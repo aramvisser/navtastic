@@ -53,4 +53,58 @@ RSpec.describe Navtastic::Item do
       it { is_expected.to eq true }
     end
   end
+
+  describe '#url' do
+    subject(:url) { item.url }
+
+    let(:menu) { Navtastic::Menu.new }
+
+    context "when the item has a url" do
+      let(:item) { menu.item "A", '/a' }
+
+      it "returns that url" do
+        expect(url).to eq '/a'
+      end
+    end
+
+    context "when the item doesn't have a url" do
+      let(:item) { menu.item "A" }
+
+      it { is_expected.to eq nil }
+    end
+
+    context "when the the menu has a base_url" do
+      before { menu.config.base_url = '/admin' }
+
+      let(:item) { menu.item "Settings", '/settings' }
+
+      it "prepends the base url to the item" do
+        expect(url).to eq '/admin/settings'
+      end
+    end
+
+    context "when the parent and sub menu have a base_url" do
+      let(:submenu) { Navtastic::Menu.new menu }
+      let(:item) { submenu.item "Things", '/things' }
+
+      before do
+        menu.config.base_url = '/admin'
+        submenu.config.base_url = '/settings'
+      end
+
+      it "prepends all base urls to the item" do
+        expect(url).to eq '/admin/settings/things'
+      end
+    end
+
+    context "when the item is set to be as root" do
+      before { menu.config.base_url = '/admin' }
+
+      let(:item) { menu.item "Home", '/home', root: true }
+
+      it "doesn't prepend the base url to the item" do
+        expect(url).to eq '/home'
+      end
+    end
+  end
 end

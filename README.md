@@ -23,7 +23,9 @@ configurations of menus, depending on context.
   - [Current item](#current-item)
   - [Custom classes](#custom-classes)
   - [Runtime parameters](#runtime-parameters)
-  - [Configuration](#configuration)
+  - [Global Configuration](#global-configuration)
+  - [Menu Configuration](#menu-configuration)
+  - [Item Configuration](#item-configuration)
   - [Renderers](#renderers)
 
 ## Installation
@@ -148,7 +150,7 @@ end
 Navtastic.render :main_menu, current_url, current_user: User.current
 ```
 
-### Configuration
+### Global Configuration
 
 Some global settings that Navtastic uses can be configured. Make sure the configuration happens
 before defining any menu (e.g. when using rails, add it to `config/initializers/navtastic.rb`).
@@ -166,29 +168,34 @@ Navtastic.configure do |config|
 end
 ```
 
-### Custom classes
+### Menu Configuration
 
-Every item can have custom css classes added to it:
+Each individual menu can also be configured in some way:
 
 ```ruby
-Navtastic.define :menu do |menu|
-  menu.item "Home", "/", class: 'highlight'
-  menu.item "Posts", "/posts", content_class: 'important'
+Navtastic.define :user_menu do |menu, params|
+  # The url to put before every item
+  menu.config.base_url = '/users/' + params[:user_id]
+
+  menu.item "Profile", '/profile' # will link to: /users/123/profile
 end
 ```
 
-The `class` option puts the css class on the container (e.g. `<li>` tag), while the `content_class`
-option puts it inside the container (the `<a>` tag). So the above would render to:
+### Item Configuration
 
-```html
-<ul>
-  <li class="highlight">
-    <a href="/">Home</a>
-  </li>
-  <li>
-    <a href="/posts" class="important">Posts</a>
-  </li>
-</ul>
+Every item can have options passed to it:
+
+```ruby
+Navtastic.define :menu do |menu|
+  # Add a css class to the container (e.g. <li> tag)
+  menu.item "Home", "/", class: 'highlight'
+
+  # Add a css class the content inside the container (e.g. <a> tag)
+  menu.item "Posts", "/posts", content_class: 'important'
+
+  # If `root` is true, this item will ignore any base urls
+  menu.item "Somewhere", '/', root: true
+end
 ```
 
 ### Renderers

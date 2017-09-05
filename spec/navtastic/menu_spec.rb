@@ -152,6 +152,14 @@ RSpec.describe Navtastic::Menu do
     it "returns nil when the url doesn't exist" do
       expect(menu['/foo']).to be nil
     end
+
+    context "when the menu has a base url" do
+      before { menu.config.base_url = '/admin' }
+
+      it "adds it in front of every url" do
+        expect(menu['/admin/about'].name).to eql 'About'
+      end
+    end
   end
 
   describe '#current_item' do
