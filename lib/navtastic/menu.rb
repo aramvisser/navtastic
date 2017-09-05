@@ -71,6 +71,9 @@ module Navtastic
 
       if block_given?
         submenu = Menu.new(self)
+
+        submenu.config.base_url = url if options[:base_url] && url
+
         yield submenu
         item.submenu = submenu
       end

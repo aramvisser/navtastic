@@ -126,6 +126,25 @@ RSpec.describe Navtastic::Menu do
       it "adds the menu to the item" do
         expect(item.submenu).not_to eq nil
       end
+
+      it "the submenu has no base_url" do
+        expect(item.submenu.base_url).to eq nil
+      end
+    end
+
+    context "with the base_url option" do
+      subject(:menu) do
+        menu = described_class.new
+        menu.item "Settings", '/settings', base_url: true do |submenu|
+        end
+        menu
+      end
+
+      let(:submenu) { menu.items.first.submenu }
+
+      it "makes the item url the base_url of the submenu" do
+        expect(submenu.base_url).to eq '/settings'
+      end
     end
   end
 

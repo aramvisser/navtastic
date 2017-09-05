@@ -202,6 +202,11 @@ Navtastic.define :menu do |menu|
 
   # If `root` is true, this item will ignore any base urls
   menu.item "Somewhere", '/', root: true
+
+  # Use the item url as the base_url for the submenu
+  menu.item "Settings", '/settings', base_url: true do |submenu|
+    # submenu.config.base_url is now set to '/settings'
+  end
 end
 ```
 
