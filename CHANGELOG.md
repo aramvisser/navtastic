@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.1.0] - 2017-09-05
+
 ### Added
 
 - Configuration options
@@ -18,4 +20,5 @@
 - Highlighting current menu item
 - Runtime parameters
 
-[Unreleased]: https://github.com/aramvisser/navtastic/compare/v0.0.1...HEAD
+[Unreleased]: https://github.com/aramvisser/navtastic/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.1...v0.1.0
