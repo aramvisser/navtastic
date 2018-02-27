@@ -85,5 +85,15 @@ RSpec.describe Navtastic do
         expect(render.options[:foo]).to eq :foo
       end
     end
+
+    context "when render gets called twice in a row" do
+      before do
+        described_class.render(menu_name, '/', renderer: { foo: :bar })
+      end
+
+      it "won't use the renderer params from the first call" do
+        expect(render.options[:foo]).to be_nil
+      end
+    end
   end
 end
