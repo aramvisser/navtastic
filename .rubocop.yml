@@ -8,6 +8,7 @@ AllCops:
     - 'spec/demo/**/*'
     - 'spec/support/**/*'
     - 'vendor/**/*'
+    - '*.gemspec'
   TargetRubyVersion: 2.4
 
 Metrics/AbcSize:
@@ -26,6 +27,6 @@ Style/FrozenStringLiteralComment:
 Style/StringLiterals:
   Enabled: false
 
-Style/TrailingCommaInLiteral:
+Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: consistent_comma
   
