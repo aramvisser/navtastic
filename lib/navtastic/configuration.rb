@@ -22,9 +22,20 @@ module Navtastic # :nodoc:
     # @return [Hash]
     attr_accessor :renderer_options
 
+    # Should the renderer class be reloaded everytime the menu is rendered?
+    #
+    # This is helpful during development, to avoid restarting the server after
+    # every change, but should be disabled during production.
+    #
+    # Defaults to `false`
+    #
+    # @return bool
+    attr_accessor :reload_renderer
+
     def initialize
       @renderer = Navtastic::Renderer::Simple
       @renderer_options = {}
+      @reload_renderer = false
       @base_url = nil
     end
 
@@ -42,6 +53,20 @@ module Navtastic # :nodoc:
         @renderer = renderers[value]
       else
         @renderer = value
+      end
+    end
+
+    # @return [Navtastic::Renderer] renderer to use
+    #
+    # Will hot reload the renderer class if needed
+    def current_renderer
+      klass = renderer
+
+      if reload_renderer
+        klass = klass.to_s unless klass.is_a?(String)
+        Object.const_get(klass)
+      else
+        klass
       end
     end
 

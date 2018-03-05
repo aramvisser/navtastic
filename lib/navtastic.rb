@@ -65,7 +65,7 @@ module Navtastic
     menu = Menu.new
     block.call(menu, params)
     menu.current_url = current_url
-    Navtastic.configuration.renderer.render(menu, renderer_options)
+    Navtastic.configuration.current_renderer.render(menu, renderer_options)
   end
 
   # A list of all defined menus

@@ -172,6 +172,9 @@ Navtastic.configure do |config|
 
   # Options that are passed to the renderer
   config.renderer_options = {}
+
+  # Reload the renderer class every time menu is rendered (helpful during development)
+  config.reload_renderer = false
 end
 ```
 
