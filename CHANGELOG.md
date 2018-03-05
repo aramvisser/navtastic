@@ -5,6 +5,7 @@
 ### Added
 
 - Hot reload option of renderer class
+- Support for Rails (configuration and view helpers)
 
 ## [0.1.0] - 2017-09-05
 

@@ -80,6 +80,12 @@ Using the default renderer, assuming that the current url starts with `/posts`, 
 </ul>
 ```
 
+### Rails
+
+When using rails, a `render_menu` helper is added that automatically sets the current_url.
+
+Also, put defined menus in `app/menus` to take advantage of hot reload.
+
 ## Documentation
 
 ### Submenus

@@ -75,3 +75,5 @@ module Navtastic
     @menu_store.keys
   end
 end
+
+require 'navtastic/railtie.rb' if defined?(Rails)
