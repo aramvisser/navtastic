@@ -133,7 +133,7 @@ module Navtastic
     #
     # @return [String]
     def base_url
-      base_url = config.base_url.to_s
+      base_url = config.base_url.to_s.dup
       base_url.prepend Navtastic.configuration.base_url.to_s if root?
       base_url.prepend @parent.base_url.to_s unless root?
       base_url = nil if base_url.empty?
